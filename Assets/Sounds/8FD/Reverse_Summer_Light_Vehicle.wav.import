@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Reverse_Summer_Light_Vehicle.wav-b82b1165398e4aeab08aeaa4a29c5fe7.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/8FD/Reverse_Summer_Light_Vehicle.wav"
+dest_files=[ "res://.import/Reverse_Summer_Light_Vehicle.wav-b82b1165398e4aeab08aeaa4a29c5fe7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
