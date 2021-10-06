@@ -13,10 +13,7 @@ func _ready():
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_LEFT:
-			get_node("Rear_Wheel_Right_Joint").set("angular_motor_y/target_velocity", 2)
-			get_node("Rear_Wheel_Left_Joint").set("angular_motor_y/target_velocity", 2)
+			# This is wrong, but just for testing...
+			get_node("SteeringLink/SteeringPiston").apply_impulse(Vector3.ZERO, get_node("SteeringLink/SteeringPiston").transform.basis.x * 10.0)
 		elif event.pressed and event.scancode == KEY_RIGHT:
-			get_node("Rear_Wheel_Right_Joint").set("angular_motor_y/target_velocity", -2)
-			get_node("Rear_Wheel_Left_Joint").set("angular_motor_y/target_velocity", -2)
-		#else: get_node("Rear_Wheel_Right_Joint").set("angular_motor_y/target_velocity", 0)
-		#get_node("Rear_Wheel_Left_Joint").set("angular_motor_y/target_velocity", 0)  
+			get_node("SteeringLink/SteeringPiston").apply_impulse(Vector3.ZERO, -get_node("SteeringLink/SteeringPiston").transform.basis.x * 10.0)
