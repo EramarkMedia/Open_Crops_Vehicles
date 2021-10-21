@@ -1,0 +1,16 @@
+# Blender v2.91.0 OBJ File: 'Toyota-8FG_With_New_Rear_Axle.blend'
+# www.blender.org
+mtllib Custom_Collider.mtl
+o Plane
+v -0.434303 1.776077 0.512033
+v 0.432401 1.776077 0.512033
+v -0.434303 1.754937 -0.480128
+v 0.432401 1.754937 -0.480128
+vt 0.000000 0.000000
+vt 1.000000 0.000000
+vt 1.000000 1.000000
+vt 0.000000 1.000000
+vn 0.0000 0.9998 -0.0213
+usemtl None
+s off
+f 1/1/1 2/2/1 4/3/1 3/4/1
