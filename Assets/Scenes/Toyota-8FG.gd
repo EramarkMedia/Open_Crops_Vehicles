@@ -1,5 +1,6 @@
 extends Spatial
 
+
 #User interface script variable.
 var ui_script
 
@@ -20,6 +21,7 @@ onready var hyd1_animation_player = get_node("AnimationPlayer_Hydraulic_Valve_Fi
 onready var hyd2_animation_player = get_node("AnimationPlayer_Hydraulic_Valve_Second")
 #Third Hydraulic Valve.
 onready var hyd3_animation_player = get_node("AnimationPlayer_Hydraulic_Valve_Third")
+
 
 
 
@@ -53,7 +55,7 @@ func init_animations():
 	hyd1_animation_player.stop(false)
 	
 	#Second Hydraulic Lever.
-	hyd2_animation_player.set_current_animation("Second_Hydralic_Valve_Animation")
+	hyd2_animation_player.set_current_animation("Second_Hydraulic_Valve_Animation")
 	hyd2_animation_player.seek(1.7,true)
 	hyd2_animation_player.stop(false)
 	
@@ -77,14 +79,23 @@ func _ready():
 #As i believe it will give more flexibility, for per vehicle custom re-assignable inputs. 
 func _unhandled_input(event):
 	if event is InputEventKey:
-		if event.pressed and event.scancode == KEY_I:
-			if master_ignition == false:
-				#Set master ignition on "Handles master electrics.
-				master_ignition = true
-				#Call Ui script init_smartscreen fuction, to turn monitor on.
-				ui_script.init_smartscreen("on")
-			else:
-				#Set master ignition off "Handles master electrics.
-				master_ignition = false
-				#Call Ui script init_smartscreen fuction, to turn monitor off.
-				ui_script.init_smartscreen("off")
+		if ui_script.grab_input == false:
+			print("false")
+			#Keybind list will atleast for now, remain hardcoded to key F1.
+			if event.pressed and event.scancode == KEY_F1:
+				ui_script.toggle_keybind_list()
+			
+			if event.pressed and event.scancode == KEY_I:
+				if master_ignition == false:
+					#Set master ignition on "Handles master electrics.
+					master_ignition = true
+					#Call Ui script init_smartscreen fuction, to turn monitor on.
+					ui_script.init_smartscreen("on")
+				else:
+					#Set master ignition off "Handles master electrics.
+					master_ignition = false
+					#Call Ui script init_smartscreen fuction, to turn monitor off.
+					ui_script.init_smartscreen("off")
+		else: 
+			ui_script.grabbed_input = event.as_text()
+			print(ui_script.grabbed_input)
