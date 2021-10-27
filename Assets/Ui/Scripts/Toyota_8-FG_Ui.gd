@@ -9,6 +9,13 @@ onready var screen_sound = get_node("./Smartscreen_Frame/Screen_AudioStreamPlaye
 #Timer for handling screen value updates.
 var element_timer
 
+#Itemlist.
+onready var list = get_node("KeyBindingsItemList")
+#Keybind grabbing state variable. For disabling all other input when we want to grab inputs.
+var grab_input = false
+
+var grabbed_input
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(false)
@@ -22,13 +29,37 @@ func _process(delta):
 
 #Function for populating the keybind list.
 func populate_keybind_list():
-	#Get keybind item list.
-	var list = get_node("KeyBindingsItemList")
-	#Set the header for engine category, assign icon for category, and set as non-selectable.
+	#Set the header for engine category, assign icon for category, and set as non-selectable "OBS,Huom,Note!***Bug***."Will remain selectable"
 	list.add_item("Engine",load("res://Assets/Ui/Keybinding_Category_Icons/Engine.png"),false)
 	#Add master ignition to list, as selectable.
 	list.add_item("Master-Ignition",null,true)
 
+#Called when keybind grab window becomes visible.
+#Here we will set grab_input variable to true, so we can check the state of that var in unhandled input over at Toyota-8GD.gd
+func Keybind_Grab_WindowDialog_draw():
+	grab_input = true
+
+#Called when keybind grab window becomes hidden.
+#Here we will set grab_input variable to false, so we can check the state of that var in unhandled input over at Toyota-8GD.gd
+func Keybind_Grab_WindowDialog_hide():
+	grab_input = false
+
+#Function for itemlist selections. #Use rmb selection, in order for user to be able to highlight with lmb.
+func KeyBindingsItemList_item_rmb_selected(index, _at_position):
+	#Show windowdialog for grabbing / assigning input. "in center of screen"
+	get_node("./Keybind_Grab_WindowDialog").popup_centered()
+	#Get selected index of list in text.
+	var item = list.get_item_text(index)
+	#Get & assign the label of the input we have selected in list.
+	get_node("./Keybind_Grab_WindowDialog/Keybind_Source_Label").bbcode_text = "[center]"+item+"[/center]"
+	print(item)
+
+#Function for handling visibility of keybind list.
+func toggle_keybind_list():
+	var list_visible = $"./KeyBindingsItemList".is_visible()
+	if !list_visible:
+		$"./KeyBindingsItemList".show()
+	else:$"./KeyBindingsItemList".hide()
 
 #Called from Toyota-8FG.gd
 func init_smartscreen(var state):
@@ -130,18 +161,10 @@ func update_elements():
 #Button Events.
 
 func _on_Speed_Selection_Button_pressed():
+	#Should check if master ignition is on, before playing....
 	screen_sound.stream = load("res://Assets/Ui/Smart_Screen/Sounds/Button_Beep.wav")
 	screen_sound.play(0)
 
-#Key Events.
-
-func _unhandled_input(event):
-	if event is InputEventKey:
-		if event.pressed and event.scancode == KEY_F1:
-			var visible = $"./KeyBindingsItemList".is_visible()
-			if !visible:
-				$"./KeyBindingsItemList".show()
-			else:$"./KeyBindingsItemList".hide()
 
 
 
