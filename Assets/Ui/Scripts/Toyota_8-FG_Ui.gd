@@ -13,7 +13,7 @@ var element_timer
 onready var list = get_node("KeyBindingsItemList")
 #Keybind grabbing state variable. For disabling all other input when we want to grab inputs.
 var grab_input = false
-
+#Grabbed Event.
 var grabbed_input
 
 # Called when the node enters the scene tree for the first time.
@@ -154,16 +154,18 @@ func start_smartscreen():
 func update_elements():
 	#Here we shall grab info from the variables in the main vehicle script.
 	print("update")
-	pass
+	
 
 
 
 #Button Events.
 
 func _on_Speed_Selection_Button_pressed():
-	#Should check if master ignition is on, before playing....
-	screen_sound.stream = load("res://Assets/Ui/Smart_Screen/Sounds/Button_Beep.wav")
-	screen_sound.play(0)
+	#Check if master ignition is true before playing. "Main Script" Main Script is under Autoload.
+	#Is this dirty? Fuck, i don't know at this point anymore.
+	if $"../../.".master_ignition:
+		screen_sound.stream = load("res://Assets/Ui/Smart_Screen/Sounds/Button_Beep.wav")
+		screen_sound.play(0)
 
 
 
